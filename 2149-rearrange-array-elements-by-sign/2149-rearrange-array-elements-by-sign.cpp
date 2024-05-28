@@ -2,19 +2,18 @@ class Solution {
 public:
     vector<int> rearrangeArray(vector<int>& nums) {
         int n = nums.size();
-        vector<int> pos,neg;
+        int pos=0,neg=1;
+        //since positives will be on even and negatives will be on odd indexes
+        vector<int> result(n);
         for(auto num : nums){
-            if(num>0){
-                pos.push_back(num);
+            if(num > 0){
+                result[pos] = num;
+                pos += 2;
             }
             else{
-                neg.push_back(num);
+                result[neg] = num;
+                neg += 2;
             }
-        }
-        vector<int> result;
-        for(int i=0;i<pos.size();i++){
-            result.push_back(pos[i]);
-            result.push_back(neg[i]);
         }
         return result;
     }
