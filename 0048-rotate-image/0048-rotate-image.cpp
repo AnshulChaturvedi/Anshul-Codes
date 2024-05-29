@@ -5,10 +5,9 @@ public:
         int m = matrix[0].size();
         //1. Transpose of the matrix
         //2. reverse every row
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(j>i)
-                    swap(matrix[i][j],matrix[j][i]);
+        for(int i=0;i<=n-2;i++){
+            for(int j=i+1;j<m;j++){
+                swap(matrix[i][j],matrix[j][i]);
             }
         }
 
