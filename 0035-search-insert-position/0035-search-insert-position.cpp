@@ -7,10 +7,7 @@ public:
         int ub = nums.size();
         while(s<=e){
             int mid = s + (e-s)/2;
-            if(nums[mid] == target){
-                return mid;
-            }
-            else if(nums[mid] > target){
+            if(nums[mid] >= target){
                 ub = mid;
                 e = mid - 1;
             }
