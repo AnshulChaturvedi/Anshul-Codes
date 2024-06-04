@@ -5,9 +5,11 @@ public:
         int s = 0,e = n-1;
         while(s<=e){
             int mid = s + (e-s)/2;
+
             if(nums[mid] == target){
                 return true;
             }
+
             if(nums[s] == nums[mid] && nums[e] == nums[mid]){
                 s++;
                 e--;
