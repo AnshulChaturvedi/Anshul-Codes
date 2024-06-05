@@ -9,8 +9,9 @@ private:
     }
 public:
     int smallestDivisor(vector<int>& nums, int threshold) {
+        int maxi = *max_element(nums.begin(),nums.end());
         int s = 1;
-        int e = 1000000;
+        int e = maxi;
         int ans = INT_MAX;
         while(s<=e){
             int mid = s + (e-s)/2;
