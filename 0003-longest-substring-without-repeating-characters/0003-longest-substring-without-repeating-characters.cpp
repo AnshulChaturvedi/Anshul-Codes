@@ -8,11 +8,9 @@ public:
         vector<bool> vis(256,false);
 
         while(j<n){
-            if(vis[s[j]] == true){
-                while(vis[s[j]] == true){
-                    vis[s[i]] = false;
-                    i++;
-                }
+            while(vis[s[j]] == true){
+                vis[s[i]] = false;
+                i++;
             }
             vis[s[j]] = true;
             ans = max(ans,j-i+1);
