@@ -1,27 +1,27 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        vector<int> ans;
-
-        map<int,int> mpp;
-        for(auto & it : arr1){
-            mpp[it]++;
+        //Custom Sort function Approach
+        unordered_map<int,int> mpp;
+        for(int i=0;i<arr2.size();i++){
+            mpp[arr2[i]] = i;
         }
-
-        for(auto &num : arr2){
-            if(mpp.find(num) != mpp.end()){
-                while(mpp[num]--){
-                    ans.push_back(num);
-                }
-                mpp.erase(num);
-            }
-        }
-        for(auto &it : mpp){
-            while(it.second--){
-                ans.push_back(it.first);
+        for(auto &it : arr1){
+            if(mpp.find(it) == mpp.end()){
+                mpp[it] = INT_MAX;
             }
         }
 
-        return ans;
+        auto lambda = [&](int &num1,int &num2){
+            if(mpp[num1] == mpp[num2]){
+                return num1 < num2;
+            }
+            return mpp[num1] < mpp[num2];
+        };
+
+        sort(arr1.begin(),arr1.end(),lambda);
+
+        return arr1;
+
     }
 };
