@@ -1,23 +1,31 @@
-using ll = long long;
-
 class Solution {
+// private:
+//     double findPow(long double a, int b){
+//         if(b == 0) return 1;
+//         long double temp = findPow(a,b/2);
+//         long double result = temp * temp;
+//         if(b%2 == 1) result *= a;
+//         return result;
+//     }
+
 public:
-    double myPow(double x, int n) {
+    double myPow(double a, int n) {
+        // if(n<0){
+        //     int nn = (long long)n*-1;
+        //     return 1/findPow(x,nn);
+        // }
+        // return findPow(x,n);
 
         long double result = 1;
-        ll b = n;
-
-        if(n<0) b = (ll)-1 * n;
-
+        long long b = n;
+        if(n<0){
+            b = (long long)b * -1;
+        }
         while(b>0){
-            if(b%2 == 1) result *= x;
-            x *= x;
+            if(b%2 == 1) result *= a;
+            a *= a;
             b /= 2;
         }
-        
-        if(n<0){
-            return 1/result;
-        }
-        return result;
+        return (n<0) ? (1/result) : result;
     }
 };
