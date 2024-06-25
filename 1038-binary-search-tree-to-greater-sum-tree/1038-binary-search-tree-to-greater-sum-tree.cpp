@@ -11,36 +11,49 @@
  */
 class Solution {
 public:
-    void traversal(TreeNode* root,vector<int> &inOrder){
-        if(root == NULL)
-            return;
-        traversal(root->left,inOrder);
-        inOrder.push_back(root->val);
-        traversal(root->right,inOrder);
-    }
+    // void traversal(TreeNode* root,vector<int> &inOrder){
+    //     if(root == NULL)
+    //         return;
+    //     traversal(root->left,inOrder);
+    //     inOrder.push_back(root->val);
+    //     traversal(root->right,inOrder);
+    // }
     
-    void greaterTree(TreeNode* root,vector<int> &inOrder){
-        if(root == NULL)
-            return;
+    // void greaterTree(TreeNode* root,vector<int> &inOrder){
+    //     if(root == NULL)
+    //         return;
 
-        greaterTree(root->left,inOrder);
-        int nodeVal = root->val;
-        int sum = 0;
-        for(int i=0;i<inOrder.size();i++){
-            if(inOrder[i] >= nodeVal)
-                sum += inOrder[i];
+    //     greaterTree(root->left,inOrder);
+    //     int nodeVal = root->val;
+    //     int sum = 0;
+    //     for(int i=0;i<inOrder.size();i++){
+    //         if(inOrder[i] >= nodeVal)
+    //             sum += inOrder[i];
+    //     }
+    //     root->val = sum;
+    //     greaterTree(root->right,inOrder);
+    // }
+
+    void revInorder(TreeNode* root,int &sum){
+        if(!root){
+            return;
         }
+        revInorder(root->right,sum);
+        sum += root->val;
         root->val = sum;
-        greaterTree(root->right,inOrder);
+        revInorder(root->left,sum);
     }
 
     TreeNode* bstToGst(TreeNode* root) {
         
-        vector<int> inOrder;
-        traversal(root,inOrder);
+        // vector<int> inOrder;
+        // traversal(root,inOrder);
 
-        greaterTree(root,inOrder);
+        // greaterTree(root,inOrder);
 
+        // return root;
+        int sum = 0;
+        revInorder(root,sum);
         return root;
     }
 };
