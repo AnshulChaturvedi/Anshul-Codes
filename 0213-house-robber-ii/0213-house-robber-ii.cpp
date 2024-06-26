@@ -1,25 +1,26 @@
 class Solution {
 private:
-    int robRange(vector<int> &nums,int s,int e){
-        int n = e - s + 1;//no. of houses range who can be robbed
-        if(n == 1){
-            return nums[s];
+    int solve(int s, int e, vector<int> &nums,vector<int> &dp){
+        if(s>e){
+            return 0;
         }
-        vector<int> dp(n,-1);
-        //dp[i] represents the maxi money robbed till ith index house
-        dp[0] = nums[s];
-        dp[1] = max(nums[s],nums[s+1]);
-        for(int i=2;i<n;i++){
-            dp[i] = max(dp[i-1],dp[i-2]+nums[i+s]);
+        if(dp[s] != -1){
+            return dp[s];
         }
-        return dp[n-1];
+        int rob = solve(s+2,e,nums,dp) + nums[s];
+        int notRob = solve(s+1,e,nums,dp);
+        return dp[s] = max(rob,notRob);
     }
-
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
         if(n == 1) return nums[0];
+        if(n == 2) return max(nums[0],nums[1]);
+        if(n == 3) return max(nums[0],max(nums[1],nums[2]));
 
-        return max(robRange(nums,0,n-2),robRange(nums,1,n-1));
+        vector<int> dp1(n,-1);
+        vector<int> dp2(n,-1);
+
+        return max(solve(0,n-2,nums,dp1),solve(1,n-1,nums,dp2));
     }
 };
