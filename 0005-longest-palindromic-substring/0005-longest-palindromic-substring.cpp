@@ -1,46 +1,40 @@
 class Solution {
 public:
-    int memo[1001][1001];
-    int solve(int s,int e,string &str){
-        // while(s<=e){
-        //     if(str[s] == str[e]){
-        //         s++;
-        //         e--;
-        //     }
-        //     else{
-        //         return false;
-        //     }
-        // }
-        // return true;
-        if(s>=e){
-            return 1;
-        }
-        if(memo[s][e] != -1){
-            return memo[s][e];
-        }
-        if(str[s] == str[e]){
-            return memo[s][e] = solve(s+1,e-1,str);
-        }
-        return memo[s][e] = 0;
-    }
     string longestPalindrome(string s) {
-        int n = s.size();
+        int n = s.length();
+        if(n == 0) return "";
+        if(n == 1) return s;
 
-        memset(memo,-1,sizeof(memo));
-        int maxLength = INT_MIN;
         int st = 0;
+        int maxLen = 1;
 
+        vector<vector<bool>> dp(n,vector<bool> (n,false));
+        //dp[i][j] represents that whether the str from i to j isPalindrome or not
+        //B
         for(int i=0;i<n;i++){
-            for(int j=i;j<n;j++){
-                if(solve(i,j,s)){
-                    if(j-i+1 > maxLength){
-                        maxLength = j-i+1;
+            dp[i][i] = true;
+        }
+        for(int i=0;i<n-1;i++){
+            if(s[i] == s[i+1]){
+                dp[i][i+1] = true;
+                st = i;
+                maxLen = 2;
+            }
+        }
+
+        //T
+        for(int len=3;len<=n;len++){
+            for(int i=0;i<n+1-len;i++){
+                int j = i+len-1;
+                if(s[i] == s[j] && dp[i+1][j-1]){
+                    dp[i][j] = true;
+                    if(len > maxLen){
+                        maxLen = len;
                         st = i;
                     }
-                        
                 }
             }
         }
-        return s.substr(st,maxLength);
+        return s.substr(st,maxLen);
     }
 };
