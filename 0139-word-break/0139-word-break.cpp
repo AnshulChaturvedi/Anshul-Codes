@@ -1,27 +1,24 @@
 class Solution {
-private:
-    bool solve(int idx,string s,unordered_set<string> &st,vector<int> &memo){
-        if(idx == s.size()){
-            return true;
-        }
-        if(memo[idx] != -1){
-            return memo[idx];
-        }
-        for(int i=idx;i<s.size();i++){
-            string val = s.substr(idx,i-idx+1);
-            if(st.find(val) != st.end()){
-                if(solve(i+1,s,st,memo) == true){
-                    return memo[idx] = true;
+public:
+    bool isPresent(int i,int j,string s,unordered_set<string>& st){
+        return st.find(s.substr(i,j-i+1)) != st.end();
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> st(wordDict.begin(),wordDict.end());
+        int n = s.size();
+        
+        vector<int> dp(n+1,false);
+        //dp[i] represents wheather there exists a substr from 0 to i present in dict
+        dp[0] = true; //no word string can be made from dict
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<i;j++){
+                if(dp[j] && isPresent(j,i-1,s,st)){
+                    dp[i] = true;
+                    break;
                 }
             }
         }
-        return memo[idx] = false;
-    }
-
-public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-        unordered_set<string> st(wordDict.begin(),wordDict.end());
-        vector<int> memo(s.size(),-1);
-        return solve(0,s,st,memo);
+        return dp[n];
     }
 };
