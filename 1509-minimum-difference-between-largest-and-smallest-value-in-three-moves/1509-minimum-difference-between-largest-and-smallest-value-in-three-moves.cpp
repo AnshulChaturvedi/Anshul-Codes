@@ -6,10 +6,11 @@ public:
         
         int ans = INT_MAX;
         sort(nums.begin(),nums.end());
-        ans = min(ans,nums[n-1]-nums[3]);
-        ans = min(ans,nums[n-2]-nums[2]);
-        ans = min(ans,nums[n-3]-nums[1]);
-        ans = min(ans,nums[n-4]-nums[0]);
-        return ans;
+        int case1 = nums[n-4] - nums[0]; 
+        int case2 = nums[n-3] - nums[1]; 
+        int case3 = nums[n-2] - nums[2];
+        int case4 = nums[n-1] - nums[3];
+            
+        return min({case1, case2, case3, case4});
     }
 };
