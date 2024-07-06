@@ -20,21 +20,18 @@ public:
         int lvl = 0;
         while(!q.empty()){
             int k = q.size();
-            vector<int> res;
+            vector<int> res(k);
             for(int i=0;i<k;i++){
                 auto node = q.front();
                 q.pop();
-                res.push_back(node->val);
+                //
+                int idx = (lvl&1)? k-1-i : i;
+                res[idx] = node->val;
+                //
                 if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
             }
-            if(lvl&1){
-                reverse(res.begin(),res.end());
-                ans.push_back(res);
-            }
-            else{
-                ans.push_back(res);
-            }
+            ans.push_back(res);
             lvl++;
         }
         return ans;
