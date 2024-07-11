@@ -1,21 +1,32 @@
 class Solution {
 public:
     string reverseParentheses(string s) {
-        string res = "";
+        int n = s.length();
         stack<int> st;
-        for(int i=0;i<s.size();i++){
+        vector<int> mapping(n);
+        //for mapping we are gona use stack 
+        for(int i=0;i<n;i++){
             if(s[i] == '('){
-                st.push(res.size());
+                st.push(i);
             }
             else if(s[i] == ')'){
-                int l = st.top();
+                int idx = st.top();
                 st.pop();
-                reverse(res.begin()+l,res.end());
-            }
-            else{
-                res += s[i];
+                mapping[i] = idx;
+                mapping[idx] = i;
             }
         }
-        return res;
+        string ans = "";
+        int flag = 1;
+        for(int i=0;i<n;i+=flag){
+            if(s[i] == '(' || s[i] == ')'){
+                flag = -flag;
+                i = mapping[i];
+            }
+            else{
+                ans.push_back(s[i]);
+            }
+        }
+        return ans;
     }
 };
