@@ -6,31 +6,25 @@ public:
     }
 
     vector<int> asteroidCollision(vector<int>& asteroids) {
-        stack<int> st;
+        vector<int> res;
         for(auto &it : asteroids){
             bool destroyed = false;
-            while(!st.empty() && sign(st.top())>0 && sign(it)<0){// checking only when the they are actually colliding or not test case(129)
-                if(abs(st.top()) == abs(it)){
-                    st.pop();
+            while(!res.empty() && sign(res.back())>0 && sign(it)<0){// checking only when the they are actually colliding or not test case(129)
+                if(abs(res.back()) == abs(it)){
+                    res.pop_back();
                     destroyed = true;
                     break;
                 }
-                else if(abs(st.top()) < abs(it)){
-                    st.pop();
+                else if(abs(res.back()) < abs(it)){
+                    res.pop_back();
                 }
                 else{
                     destroyed = true;
                     break;
                 }
             }
-            if(!destroyed) st.push(it);
+            if(!destroyed) res.push_back(it);
         }
-        vector<int> ans;
-        while(!st.empty()){
-            ans.push_back(st.top());
-            st.pop();
-        }
-        reverse(ans.begin(),ans.end());
-        return ans;
+        return res;
     }
 };
