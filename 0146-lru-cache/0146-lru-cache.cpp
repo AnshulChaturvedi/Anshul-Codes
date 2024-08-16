@@ -2,7 +2,6 @@ class LRUCache {
 public:
     list<int> dll;
     map<int,pair<list<int>::iterator,int>> mpp;
-    // {key,{Address,value}}
     int n;
 
     LRUCache(int capacity) {
@@ -13,12 +12,12 @@ public:
         dll.erase(mpp[key].first);
         dll.push_front(key);
         mpp[key].first = dll.begin();
+        return;
     }
     
     int get(int key) {
-        if(mpp.find(key) == mpp.end()){
+        if(mpp.find(key) == mpp.end())
             return -1;
-        }
         makeRecent(key);
         return mpp[key].second;
     }
@@ -39,6 +38,7 @@ public:
             dll.pop_back();
             n++;
         }
+        return;
     }
 };
 
