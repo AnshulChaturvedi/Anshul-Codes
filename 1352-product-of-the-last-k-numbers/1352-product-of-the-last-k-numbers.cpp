@@ -1,21 +1,22 @@
 class ProductOfNumbers {
 public:
-    vector<int> vec;
+    vector<int> preMult;
     ProductOfNumbers() {
-        vec.empty();
+        preMult.push_back(1);
     }
     
     void add(int num) {
-        vec.push_back(num);
+        if(num == 0){
+            preMult.clear();
+            preMult.push_back(1);
+        }
+        else preMult.push_back(preMult.back()*num);
     }
     
     int getProduct(int k) {
-        int n = vec.size();
-        int prod = 1;
-        while(k--){
-            prod *= vec[n-k-1];
-        }
-        return prod;
+        int n = preMult.size();
+        if(k >= n) return 0;
+        return preMult[n-1]/preMult[n-k-1];
     }
 };
 
