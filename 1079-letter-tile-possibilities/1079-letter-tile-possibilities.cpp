@@ -1,12 +1,12 @@
 class Solution {
 public:
-    int solve(string s, vector<int> &freq){
+    int solve(vector<int> &freq){
         int ans = 0;
         for(char c ='A'; c <= 'Z'; c++){
             if(freq[c-'A'] > 0){
                 ans++;
                 freq[c-'A']--;
-                ans += solve(s, freq);
+                ans += solve(freq);
                 freq[c-'A']++;
             }
         }
@@ -14,7 +14,8 @@ public:
     }
     int numTilePossibilities(string tiles) {
         vector<int> freq(26,0);
-        for(auto &c : tiles) freq[c-'A']++;
-        return solve(tiles, freq);
+        for(auto &c : tiles)
+            freq[c-'A']++;
+        return solve(freq);
     }
 };
