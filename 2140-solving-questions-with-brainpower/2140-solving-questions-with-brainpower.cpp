@@ -1,26 +1,25 @@
 class Solution {
 public:
-    // long long solve( int i, vector<vector<int>>& questions){
-    //     if(i >= questions.size()) return 0;
-    //     long long take = questions[i][0] + solve(i + questions[i][1] + 1, questions);
-    //     long long skip = solve(i+1, questions);
-    //     return max(take, skip);
+    // long long solve(int i, int n, vector<vector<int>>& questions){
+    //     if(i >= n) return 0;
+    //     long long take = solve(i + questions[i][1] + 1, n, questions) + questions[i][0];
+    //     long long notTake = solve(i+1, n, questions);
+    //     return max(take, notTake);
     // }
 
     long long mostPoints(vector<vector<int>>& questions) {
         int n = questions.size();
-        // dp[i] represents the maxi points till ith index
-        vector<long long> dp(n+1,0);
+        // return solve(0, n, questions);
+        vector<long long> dp(n+1, 0);
         for(int i=n-1; i>=0; i--){
-            long long nextIndex = i + questions[i][1] + 1;
+            long long nxtIdx = i + questions[i][1] + 1;
             long long take = questions[i][0];
-            if(nextIndex < dp.size()){
-                take += dp[nextIndex];
+            if(nxtIdx < questions.size()){
+                take += dp[nxtIdx];
             }
             long long skip = dp[i+1];
-            dp[i] = max(take , skip);
+            dp[i] = max(take, skip);
         }
         return dp[0];
-        // return solve(0, questions);
     }
 };
