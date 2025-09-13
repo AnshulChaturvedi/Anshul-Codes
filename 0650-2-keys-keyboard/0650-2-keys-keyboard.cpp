@@ -1,44 +1,84 @@
 class Solution {
-private:
-    vector<int> factors(int n){
-        vector<int> ans(2,1);
-        for(int i=2;i*i<=n;i++){
-            if(n%i==0){
-                ans[1] = i;
-                ans[0] = n/i;
+public:
+    // int solve(int n){
+    //     if(n == 1) return 0;
+    //     int copy = 0;
+        
+    // }
+
+    vector<int> factor(int n){
+        vector<int> ans;
+        while(n % 2 == 0){
+            n /= 2;
+            ans.push_back(2);
+        }
+        for(int i=3; i*i <= n; i += 2){
+            while(n % i == 0){
+                n /= i;
+                ans.push_back(i);
             }
         }
         return ans;
     }
 
+    int solve(int r, int c, int n){
+        if(r == c) return 1;
+        if(c > r) return 1e9;
+        int copy = 1 + solve(r, n-r, n);
+        int paste = 1 + solve(r-c, c, n);
+        return min(copy, paste);
+    }
 
-    bool isPrime(int n){
-        for(int i=2;i*i<=n;i++){
-            if(n%i == 0){
-                return false;
-            }
+    bool prime(int n){
+        for(int i=2; i*i <= n; i++){
+            if(n%i == 0) return false;
         }
         return true;
     }
-public:
+
     int minSteps(int n) {
         if(n == 1) return 0;
-        if(isPrime(n)) return n;
+        // vector<int> dp(n+1);
         
-        vector<int> dp(n+1,0);
-        dp[0] = 0;
-        dp[1] = 0;
-        dp[2] = 2;
-        dp[3] = 3;
-        for(int i=4;i<=n;i++){
-            if(isPrime(i)){
-                dp[i] = i;
-            }
-            else{
-                vector<int> fac = factors(i);
-                dp[i] = dp[fac[0]] + dp[fac[1]];
+        // while(n%2 == 0){
+        //     dp[n] = 
+        // }
+
+        // for(int i=2; i<=n; i++){
+        //     if(prime(i)){
+        //         dp[i] = i;
+        //     }
+        //     else{
+        //         dp[i] = dp[i/]
+        //     }
+        // }
+
+
+        // if(prime(n)) return n;
+        // return solve(n);
+        // vector<vector<int>> dp(n+1, vector<int> (2));
+        // dp[1][0] = 0; // [0] copy
+        // dp[1][1] = 0; // [1] paste
+        // for(int i=2; i<=n; i++){
+        //     dp[i][k] = min(dp[i-1][0], dp[i-1][1]) + 1;
+        // }
+        // return min(dp[n][0], dp[n][1]);
+
+        int cnt = 0;
+        while(n%2 == 0){
+            n /= 2;
+            cnt += 2;
+        }
+        for(int i=3; i*i<=n; i+=2){
+            while(n%i == 0){
+                cnt += i;
+                n /= i;
             }
         }
-        return dp[n];
+        if(n > 1) cnt += n;
+        return cnt;
+
+        return solve(n-1,0,n);
+
     }
 };
